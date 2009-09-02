@@ -12,7 +12,7 @@
 #
 # $Id: mysql_snapback.py 1524 2008-01-16 19:08:14Z  $
 ########################################################################################
-# (C)2008 DigiTar, All Rights Reserved
+# (C)2009 DigiTar, All Rights Reserved
 # Distributed under the BSD License
 # 
 # Redistribution and use in source and binary forms, with or without modification, 
@@ -46,7 +46,7 @@ from optparse import OptionParser
 import sys,os,time,commands,re
 
 ### Globals & Constants
-_txt_program_revision = "0.1"
+_txt_program_revision = "1.1"
 _txt_program_name = "DigiTar SnapBack (MySQL)"
 
 ### Find the configuration file
