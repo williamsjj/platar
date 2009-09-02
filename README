@@ -1,0 +1,20 @@
+The Platar tools....
+=====================
+
+mysql_snapback - Backs up MySQL databases living on ZFS filesystems using snapshots.
+---------------
+	* SnapBack understands how to quiesce MySQL for consistent backups of InnoDB tables 
+	  (usually avoiding InnoDB recovery on a restore). Most of the open source scripts 
+	  focus exclusively on MyISAM, and forget about disabling AUTOCOMMIT.
+	* SnapBack records the current master log file name and position in the naming of 
+	  the snapshot (to aid creating replication slaves). Frankly, you can take any SnapBack 
+	  backup and create a slave from that point-in-time. You don't really need to know you want to do that at the time you pull the backup.
+	* SnapBack is aware that InnoDB logs and table space are usually on different zpools 
+	  for performance, and can snap both pools in a single backup.
+	
+	SnapBack 1.1 (aka Rev. 1524) Requirements 
+
+	Solaris 6/06 or later…or…any recent build of OpenSolaris that has ZFS.
+	Python 2.4
+	MySQL for Python (aka. MySQLdb)
+	MySQL Client libraries
