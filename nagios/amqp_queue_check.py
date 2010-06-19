@@ -5,6 +5,9 @@
 # DESCRIPTION: Nagios healthcheck. Verifies that the configured 
 #   queue on the specified AMQP server exists and that the queue's
 #   count of unacknowledged messages is below a particular threshold.
+# 
+#   Requires:
+#       * py-amqplib >= 0.5 (http://barryp.org/software/py-amqplib/)
 #
 ########################################################################################
 # (C)2010 DigiTar, All Rights Reserved
