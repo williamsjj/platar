@@ -121,7 +121,8 @@ try:
     mq_chan = mq_conn.channel()
     queue_stats = mq_chan.queue_declare(queue=args.queue_name,
                                         durable=args.durable,
-                                        auto_delete=args.auto_delete)
+                                        auto_delete=args.auto_delete,
+                                        passive=True)
 except (socket.error,
       amqp.AMQPConnectionException,
       amqp.AMQPChannelException), e:
