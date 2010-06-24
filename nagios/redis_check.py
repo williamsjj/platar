@@ -84,10 +84,15 @@ elif redis_stats["used_memory"]/1024/1024 >= warn_threshold:
     print "WARN: Redis is using %dMB of RAM." % (redis_stats["used_memory"]/1024/1024)
     sys.exit(EXIT_NAGIOS_WARN)
 else:
-    print "OK: Redis is using %dMB of RAM. Days Up: %s Clients: %s Version: %s Polling API: %s" % \
+    db_key_count = ""
+    for key in redis_stats.keys():
+        if key[:2] == "db":
+            db_key_count = db_key_count + ", DB-%s: %s keys" % (key[2:], redis_stats[key]["keys"])
+    print "OK: Redis is using %dMB of RAM. Days Up: %s, Clients: %s, Version: %s, Polling API: %s%s" % \
           (redis_stats["used_memory"]/1024/1024, 
            redis_stats["uptime_in_days"],
            redis_stats["connected_clients"], 
            redis_stats["redis_version"],
-           redis_stats["multiplexing_api"])
+           redis_stats["multiplexing_api"],
+           db_key_count)
     sys.exit(EXIT_NAGIOS_OK)
