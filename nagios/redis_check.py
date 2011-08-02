@@ -1,14 +1,14 @@
 #!/usr/bin/python
-####################################################################
+######################################################################
 # FILENAME: nagios/redis_check
 # PROJECT: Misc Scripts
-# DESCRIPTION: Nagios healthcheck. Verifies that the configured 
-#   queue on the specified AMQP server exists and that the queue's
-#   count of unacknowledged messages is below a particular threshold.
+# DESCRIPTION: Redis RAM healthcheck. Verifies via Redis INFO command
+#              that Redis is available and that it's own count of RAM
+#              usage is below the specified thresholds.
 #
 # $Id$
-########################################################################################
-# (C)2010 DigiTar, All Rights Reserved
+######################################################################
+# (C)2011 DigiTar, All Rights Reserved
 # Distributed under the BSD License
 # 
 # Redistribution and use in source and binary forms, with or without modification, 
