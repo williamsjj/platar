@@ -49,7 +49,8 @@ logging_levels = {"debug" : logging.DEBUG,
                   "error" : logging.ERROR}
 
 parser = ArgumentParser()
-parser.add_argument("--sav-version", dest="sav_version", required=True)
+parser.add_argument("--sav-version", dest="sav_version", required=True,
+                    help="Version of SAV you're running. Ex. 4.75 (4.75.0 should shortened to 4.75)")
 parser.add_argument("--conf-file", dest="conf_file",
                     default="/etc/savdi/savdid.conf",
                     help="Location of the SAVDI configuration file.")
