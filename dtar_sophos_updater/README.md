@@ -2,6 +2,7 @@
 
 The updater runs at a specified interval, downloads the latest IDE (IDentity Engine) files from Sophos, and pings the SAVDI daemon to reload it's databases. It parses the SAVDI configuration file to determine where to unpack the new IDE files, what ownership they should have, and where the PID file for SAVDI is located.
 
+__Run `dtar_sophos_updater.py --help` for information on running.__
 
 ## Requirements ##
 
