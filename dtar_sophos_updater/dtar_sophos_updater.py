@@ -57,7 +57,7 @@ parser.add_argument("--conf-file", dest="conf_file",
 parser.add_argument("--ide-update-url", dest="ide_update_url",
                     default="http://www.sophos.com/downloads/ide/",
                     help="Base URL for downloading IDE files.")
-parser.add_argument("--update-interval", dest="update_interval",
+parser.add_argument("--update-interval", dest="update_interval", type=int,
                     default=15,
                     help="Interval (in minutes) to wake up and check for IDE updates.")
 parser.add_argument("--pid-file", dest="pid_file",
@@ -173,7 +173,7 @@ def ide_download_update(url, path, version, pid, user, group):
         c_ide_contents= cStringIO.StringIO(ide_contents.read())
         del(ide_contents)
     except Exception, e:
-        logging.error("Could not download %s! Skipping update.")
+        logging.error("Could not download %s%s_ides.zip! Skipping update." % (url, version))
         return
     
     # Unpack new IDE
@@ -190,7 +190,15 @@ def ide_download_update(url, path, version, pid, user, group):
             logging.error("Could not unpack IDE. Skipping update. (%s)" % str(e))
             return
     
-    # Unpack successful, so update local revision file
+    # Notify SAVDI to reload it's databases
+    try:
+        logging.info("Sending reload signal to SAVDI PID (%s)" % pid)
+        os.kill(pid, signal.SIGHUP)
+    except Exception, e:
+        logging.error("Problem sending SIGHUP to SAVDI PID (%s). (%s)" % (pid, str(e)))
+        return
+    
+    # Unpack and reload successful, so update local revision file
     try:
         logging.debug("Updating local IDE revision file.")
         f = open(path + "/ide.rev", "w")
@@ -198,14 +206,6 @@ def ide_download_update(url, path, version, pid, user, group):
         f.close()
     except Exception, e:
         logging.error("Could not write new revision # to '%s'. (%s)" % (path + "/ide.rev", str(e)))
-        return
-    
-    # Notify SAVDI to reload it's databases
-    try:
-        logging.info("Sending reload signal to SAVDI PID (%s)" % pid)
-        os.kill(pid, signal.SIGHUP)
-    except Exception, e:
-        logging.error("Problem sending SIGHUP to SAVDI PID (%s). (%s)" % (pid, str(e)))
         return
     
     return
